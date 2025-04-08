@@ -26,21 +26,9 @@ class Tirgotajs:
     def pienemt_pasutijumu(self):
         if pasutijuma_daudzums =< minimalais_skaits:
              
-        piens = ("Piens",5,)
+        
 
-class Tirgotajs:       
-    def __init__(self,tirgotajs):
-        self.tirgotajs = tirgotajs
-
-        if self.adresats = adresats:
-            pass
-        else:
-            print("Nepareizais adresāts!")
-
-    def pienemt_pasutijumu(self):
-        if pasutijuma_daudzums =< minimalais_skaits:
-             
-
+maiznieks = Tirgotajs("Maiznieks")
 
 
 
