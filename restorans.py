@@ -31,9 +31,8 @@ class SvaigsProdukts(Produkts): #Manto klasi "Produkts"
     def __init__(self,nosaukums,skaits,dienu_skaits,minimalais_skaits):
         super().__init__(nosaukums,skaits,dienu_skaits,minimalais_skaits)
 
-    def info(self,dienu_skaits):
-        if dienu_skaits > 5:
-            return "Beidzies derīguma termiņš"
+    def pietrukst(self,skaits, minimalais_skaits):
+        skaits<minimalais_skaits
 
 class Tirgotajs: # klase Tirgotājs      
     def __init__(self,tirgotajs,produkts,min_pasutijuma_daudzums):
@@ -104,12 +103,21 @@ while True:
     elif izvele =="2":
         for produkts in produkti:
             print(produkts.pietrukst())
+            
     elif izvele =="3":
         for produkts in produkti:
-            if dienu_skaits>5:
+            if produkts.nosaukums=='Piens' and produkts.dienu_skaits>5:
                 print(produkts.info())
-            else:
-                print("Ne")
 
+    elif izvele == "5":
+        for produkts in produkti:
+            print(produkts.nolasit_saturu())
+
+    elif izvele =="6":
+        print(produkts.dzest())
+
+    elif izvele =="7" or "iziet":
+        print("Programma beidzas")
+        exit()
 
 
