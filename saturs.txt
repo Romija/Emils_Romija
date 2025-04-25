@@ -1,1 +1,4 @@
-Maize: 1234 kgMaize: 1234 kg
+Maize: 7 kg
+Maize: 7 kg
+Maize: 100 kg
+Šokolāde: 23 kg
