@@ -41,13 +41,13 @@ class Tirgotajs: # klase Tirgotājs
         self.min_pasutijuma_daudzums = min_pasutijuma_daudzums
 
 
-    def pienemt_pasutijumu(self, pasutijuma_daudzums, min_pasutijuma_daudzums): # funkcija pārbauda vai lietotājs var pasūtīt produktus, vai nav mazāk par minimālo daudzumu
-        if pasutijuma_daudzums >= min_pasutijuma_daudzums:
-           print("Pasūtījums ir pieņemts")
-        elif min_pasutijuma_daudzums > pasutijuma_daudzums:
-            print(f"Pasūtījums netiek pieņemts, jo pasūtījuma daudzums ir mazāks ({self.pasutijuma_daudzums}) par minimālo daudzumu ({self.min_pasutijuma_daudzums})")
-        else:
-            print("Ievadiet pareizus datus!")
+    def pienemt_pasutijumu(self, produkts, pasutijuma_daudzums): # funkcija pārbauda vai lietotājs var pasūtīt produktus, vai nav mazāk par minimālo daudzumu
+        if pasutijuma_daudzums < self.min_pasutijuma_daudzums:
+           return f"Pasūtījums netiek pieņemts, jo pasūtījuma daudzums ir mazāks ({self.pasutijuma_daudzums}) par minimālo daudzumu ({self.min_pasutijuma_daudzums})"
+        if produkts==self.produkts:
+            return "Šāds produkts nepastāv!"
+        
+        return "Pasūtījums ir pieņemts"
 
 class Pasutijums:
     saglabatie_pasutijumi = []
@@ -60,10 +60,10 @@ class Pasutijums:
 
     def saglabat_faila(self, faila_nosaukums = 'saturs.txt'):
         with open(faila_nosaukums, "a", encoding = 'utf8') as fails:
-            fails.write(f"{self.nosaukums}: {self.skaits} kg")
+            fails.write(f"{self.prece}: {self.apjoms} kg")
 
     @classmethod
-    def nolasit_saturu(self, faila_nosaukums):
+    def nolasit_saturu(cls, faila_nosaukums="saturs.txt"):
         try:
             with open(faila_nosaukums, "r", encoding = "utf8") as fails:
                 saturs = fails.readlines()
@@ -118,19 +118,22 @@ while True:
     elif izvele== "4":
         adresats = input("Lūdzu ievadiet adresātu: ")
         prece = input("Lūdzu ievadiet preci: ")
-        pasutijuma_daudzums = int(input("Lūdzu ievadiet preces daudzumu"))
+        pasutijuma_daudzums = int(input("Lūdzu ievadiet preces daudzumu: "))
 
         if adresats in tirgotaji:
             tirgotajs = tirgotaji[adresats]
-            rezultats = tirgotajs.pienemt_pasutijumu(produkts, pasutijuma_daudzums)
+            rezultats = tirgotajs.pienemt_pasutijumu(Produkts, pasutijuma_daudzums)
             print(rezultats)
             if "Pasūtījums ir pieņemts" in rezultats:
+                pasutijums = Pasutijums(adresats, prece, pasutijuma_daudzums)
+                pasutijums.saglabat_faila()
                 for p in produkti:
-                    p.saglabat_faila()
+                    if p.nosaukums == prece:
+                        p.pievienot(pasutijuma_daudzums)
+                        break
 
     elif izvele == "5":
-        for i in produkti:
-            print(i.nolasit_saturu())
+            print(Pasutijums.nolasit_saturu())
 
     elif izvele =="6":
      for produkts in produkti:
@@ -141,7 +144,7 @@ while True:
             elif produkts.dienu_skaits>5:
                 produkts.dzest()
 
-    elif izvele =="7" or "iziet":
+    elif izvele =="7" or izvele == "iziet":
         print("Programma beidzas")
         exit()
         
